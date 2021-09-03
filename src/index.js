@@ -1,5 +1,6 @@
 module.exports = function solveSudoku(matrix) {
   // your solution
+
   const size = 9;
   const area = 3;
 
@@ -38,11 +39,11 @@ module.exports = function solveSudoku(matrix) {
         }
     }
 
-    const boxRow = Math.floor( r/area ) * area;
-    const boxCol = Math.floor( c/area ) * area;
+    const startRow = Math.floor( r/area ) * area;
+    const startCol = Math.floor( c/area ) * area;
 
-    for (let i = boxRow; i < boxRow + area; i++) {
-        for (let j = boxCol; j < boxCol + area; j++) {
+    for (let i = startRow; i < startRow + area; i++) {
+        for (let j = startCol; j < startCol + area; j++) {
             if (matrix[i][j] === n && i !== r && j !== c) {
                 return false;
             }
