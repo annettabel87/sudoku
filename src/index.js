@@ -1,19 +1,56 @@
 module.exports = function solveSudoku(matrix) {
   // your solution
-  const sizeMatrix = 9;
-  const cell = 3;
+  const size = 9;
+  const area = 3;
 
-function getEmptyCells(matrix) {
-  for (let i = 0; i < sizeMatrix; i++) {
-    for (let j = 0; j < sizeMatrix; j++) {
-      if (matrix[i][j] === 0) {
-      return ([i, j])
-      }
+  function solve(matrix){    
+    for (let r = 0; r < size; r++){    
+        for (let c = 0; c < size; c++){    
+          if (matrix[r][c] === 0){    
+            for (let n = 1; n <= size; n++){    
+              if (isValid(matrix, r, c, n)){    
+                matrix[r][c] = n;    
+                if (solveSudoku(matrix)){    
+                 return matrix;    
+                } else {    
+                  matrix[r][c] = 0;    
+                }    
+              }    
+            }    
+            return false;    
+          }    
+        }    
+      }    
+      return matrix;    
     }
-  }
-}
-  
-  for (let i =0; i < 10; i++) {
+    
+    function isValid(matrix, r, c, n){    
+      for (let i = 0; i < size; i++) {
+        if (matrix[i][c] === n && i !== r) {
+            return false;
+        }
+    }
 
-  }
+    
+    for (let i = 0; i < size; i++) {
+        if (matrix[r][i] === n && i !== c) {
+            return false;
+        }
+    }
+
+    const boxRow = Math.floor( r/area ) * area;
+    const boxCol = Math.floor( c/area ) * area;
+
+    for (let i = boxRow; i < boxRow + area; i++) {
+        for (let j = boxCol; j < boxCol + area; j++) {
+            if (matrix[i][j] === n && i !== r && j !== c) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}     
+    
+    return solve(matrix);
 }
